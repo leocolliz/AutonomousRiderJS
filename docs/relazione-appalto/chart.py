@@ -45,23 +45,22 @@ line([mid,mid],[r2y+r2h,busy])
 line([sw/2,W-sw/2],[busy,busy])
 for i,l in enumerate(st):
     x=i*(sw+g); line([x+sw/2,x+sw/2],[busy,r3y]); box(x,r3y,sw,r3h,l,"staff")
-# Row 4 capocantiere + preposto
-r4y,r4h=7.3,1.25; cx,cwid=5.75,5.5
-line([mid,mid],[busy,r4y])
-box(cx,r4y,cwid,r4h,["CAPOCANTIERE","formazione C.A.M."],"op",cam=True)
-px,pw=12.6,4.4
-box(px,r4y,pw,r4h,["PREPOSTO","sicurezza – C.A.M."],"op",cam=True)
-line([cx+cwid,px],[r4y+r4h/2,r4y+r4h/2])
-line([cx-0.0,4.4],[r4y+r4h/2,r4y+r4h/2])
-box(0,r4y,4.4,r4h,["CAPOSQUADRA","formazione C.A.M."],"op",cam=True)
+# Row 4: Capocantiere -> Preposto -> Caposquadra
+r4y,r4h=7.3,1.25; bw4=4.6; gx=sw+g/2  # varco tra 1a e 2a casella staff
+c1=gx-bw4/2; c2=c1+bw4+0.65; c3=W-bw4
+line([gx,gx],[busy,r4y])
+box(c1,r4y,bw4,r4h,["CAPOCANTIERE","formazione C.A.M."],"op",cam=True)
+box(c2,r4y,bw4,r4h,["PREPOSTO","sicurezza – C.A.M."],"op",cam=True)
+box(c3,r4y,bw4,r4h,["CAPOSQUADRA","formazione C.A.M."],"op",cam=True)
+line([c1+bw4,c2],[r4y+r4h/2,r4y+r4h/2]); line([c2+bw4,c3],[r4y+r4h/2,r4y+r4h/2])
 # Row 5 esecutori
 r5y,r5h=9.4,2.15; bw=3.2; g5=(W-5*bw)/4; bus5=9.0
-line([mid,mid],[r4y+r4h,bus5]); line([bw+g5+bw/2,W-bw/2],[bus5,bus5])
-ex=[["SQUADRE","INTERNE","opere edili","e strutturali"],["IMPRESE","SPECIALIZZ.","massetti, pavim.","e finiture"],
-    ["IMPRESE","SPECIALIZZ.","copertura legno,","facciate, serram."],["IMPRESA OS28","qualificata","impianti","termoidraulici"],
-    ["IMPRESA OS30","qualificata","impianti","elettrici"]]
+ex=[["IMPRESE","SPECIALIZZ.","massetti, pavim.","e finiture"],["IMPRESE","SPECIALIZZ.","copertura legno,","facciate, serram."],
+    ["IMPRESA OS28","qualificata","impianti","termoidraulici"],["IMPRESA OS30","qualificata","impianti","elettrici"],
+    ["SQUADRE","INTERNE","opere edili","e strutturali"]]
+line([gx,gx],[r4y+r4h,bus5]); line([bw/2,3*(bw+g5)+bw/2],[bus5,bus5])
 for i,l in enumerate(ex):
-    x=i*(bw+g5); line([x+bw/2,x+bw/2],[bus5 if i else r4y+r4h,r5y]); box(x,r5y,bw,r5h,l,"sub")
+    x=i*(bw+g5); line([x+bw/2,x+bw/2],[bus5 if i<4 else r4y+r4h,r5y]); box(x,r5y,bw,r5h,l,"sub")
 # legend
 ly=12.2
 ax.add_patch(FancyBboxPatch((0,ly-0.25),1.25,0.5,boxstyle="round,pad=0,rounding_size=0.1",fc="#2E8B3E",ec="white"))
