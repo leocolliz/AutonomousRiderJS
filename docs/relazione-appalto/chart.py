@@ -10,10 +10,10 @@ FS=11
 ST={"comm":("#E7E9EC","#6B7280","#1F2937"),"dir":("#1F3A5F","#1F3A5F","white"),
     "staff":("#DCE8F5","#3B6EA5","#1F2937"),"op":("#C9DCF0","#1F3A5F","#1F2937"),
     "bim":("#DDF1EE","#2A8C7E","#1F2937"),"sub":("#FFFFFF","#3B6EA5","#1F2937")}
-def box(x,y,w,h,lines,st,cam=False):
+def box(x,y,w,h,lines,st,cam=False,lh=0.46):
     fc,ec,tc=ST[st]
     ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=0,rounding_size=0.15",fc=fc,ec=ec,lw=1.2))
-    n=len(lines); lh=0.46; y0=y+h/2-(n-1)*lh/2
+    n=len(lines); y0=y+h/2-(n-1)*lh/2
     for i,t in enumerate(lines):
         b = i==0
         ax.text(x+w/2,y0+i*lh,t,ha="center",va="center",fontsize=FS,color=tc,
@@ -29,10 +29,10 @@ r1y,r1h=0.25,1.6
 cw=3.95; xs=[0,4.15,8.3]
 labels=[["RUP","Committente"],["DIREZIONE","LAVORI"],["COORDINATORE","SICUREZZA (CSE)"]]
 for x,l in zip(xs,labels): box(x,r1y,cw,r1h,l,"comm")
-box(12.6,r1y,4.4,r1h,["BIM TEAM ESTERNO","BIM Manager","BIM Coordinator"],"bim")
+box(12.6,0.08,4.4,r1y+r1h-0.08,["BIM TEAM ESTERNO","BIM Manager","BIM Coordinator","BIM Specialist"],"bim",lh=0.42)
 # Row 2 DTC
 r2y,r2h=2.75,1.75; dx,dw=3.0,8.4
-box(dx,r2y,dw,r2h,["DIRETTORE TECNICO DI CANTIERE","Resp. procedure C.A.M. e DNSH","Tecnico competente C.A.M."],"dir",cam=True)
+box(dx,r2y,dw,r2h,["DIRETTORE TECNICO DI CANTIERE","Tecnico competente in materia C.A.M."],"dir",cam=True)
 for x in xs:
     cx=x+cw/2; cx2=min(max(cx,dx+0.6),dx+dw-0.6)
     line([cx,cx,cx2,cx2],[r1y+r1h,(r1y+r1h+r2y)/2,(r1y+r1h+r2y)/2,r2y],dash=True)
